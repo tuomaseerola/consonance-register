@@ -14,7 +14,7 @@ by XXXX XXXXX XXXXXX XXXXX.
 
 <div class="figure">
 
-<img src="man/figures/README-register-1.png" alt="Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p.8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers." width="75%" />
+<img src="README-register-1.png" alt="Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p.8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers." width="75%" />
 <p class="caption">
 Panel A: 7 stimulus registers overlaid on an idealised distribution of
 orchestral instrument ranges (from Huron, 2001, p.8). Panel B:
