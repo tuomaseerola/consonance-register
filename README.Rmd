@@ -1,0 +1,110 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "75%"
+)
+```
+
+# Register and consonance
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This repository contains data and analysis concerning study titled "Register Impacts Perceptual Consonance through Roughness and Sharpness" by XXXX XXXXX XXXXXX XXXXX.
+
+
+
+## Background
+
+```{r register,message=FALSE, warning=FALSE,echo=FALSE,fig.width=9,fig.height=5,fig.cap='Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p.8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers.'}
+source('predictions.R')
+print(G)
+```
+
+## Stimuli
+
+```{r stim,echo=FALSE, cache=TRUE}
+d <- read.csv('tetrads_4_rich.csv',header = TRUE)
+knitr::kable(d,caption = 'Stimulus details.',format = 'simple')
+```
+
+
+## Load and preprocess the data
+
+```{r initial,message=FALSE,warning=FALSE,echo=FALSE,cache=TRUE}
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(papaja)
+library(psych)
+
+# Suppress summarise info
+options(dplyr.summarise.inform = FALSE)
+
+source('load_and_preprocess_data.R')
+```
+
+### Summarise consonance ratings
+
+```{r summary,echo=FALSE}
+options(dplyr.summarise.inform = FALSE)
+source('summarise_means.R')
+```
+
+### Linear mixed model
+
+```{r LMM, message=FALSE, warning=FALSE,echo=FALSE,cache=TRUE,results='asis'}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(papaja)
+library(psych)
+source('LMMs.R')
+```
+
+```{r LMM_table, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(papaja)
+lmm_table <- apa_print(m1num2)
+table2 <- data.frame(lmm_table$table)
+
+table2 <- table2[-1, ]
+table2[ ,1] <- c("Chord", "Register", "Expertise", "Chord $\\times$ Register", "Chord $\\times$ Expertise", "Register $\\times$ Expertise", "Chord $\\times$ Register $\\times$ Expertise")
+
+apa_table(table2, caption = 'Linear Mixed Model analysis results for the consonance ratings for three Factors.',
+row.names = F, escape = F
+)
+
+```
+
+### Regression with the means
+
+```{r regression, message=FALSE, warning=FALSE,echo=FALSE,fig.width=9,fig.height=11, fig.cap='Cubic model fit to (A) mean consonance ratings and (B) means across the chords.'}
+source('regression_with_means.R')
+print(G)
+```
+
+### Regression with the acoustic variables
+
+```{r regression_acoustic,warning=FALSE,messages=FALSE,echo=FALSE,results='asis'}
+source('regression_acoustic.R')
+
+papaja::apa_table(
+  acoust_lm$table
+  , caption = "A regression table with the two acoustic predictors."
+)
+
+```

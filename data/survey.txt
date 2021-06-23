@@ -1,0 +1,539 @@
+# This is the Register and consonance study
+# TE created survey, April 2021
+
+l: prolific_id
+t: textline
+q: Please enter your Prolific ID here:
+- {length=30}
+
+l: age
+t: textline
+q: How old are you?
+- {min=18,max=100}
+
+l: gender
+t: radio
+q: What is your gender?
+- Female
+- Male
+- Other
+- Prefer not to say
+
+scale: agree
+- Completely Disagree
+- Strongly Disagree
+- Disagree
+- Neither Agree nor Disagree
+- Agree
+- Strongly Agree
+- Completely Agree
+
+l: activemusician
+q: I am currenly active in playing an instrument/singing
+t: radio
+- No
+- Yes
+
+l: jump1
+t: jump
+- if $activemusician == 1 then goto education
+
+l: goldmsi
+q: Please circle the most appropriate category
+t: scale agree
+- I have never been complimented for my talents as a musical performer
+- I would not consider myself a musician
+
+l: practice
+q: I am engaged in regular, daily practice of a musical instrument (including voice) for 
+t: radio
+- 0
+- 1
+- 2
+- 3
+- 4-5
+- 6-9
+- 10 or more years
+
+l: jump2
+t: jump
+- if $practice == 1 then goto education
+
+l: practicehours
+q: At the peak of my interest, I practiced
+t: radio
+- 0
+- 0.5
+- 1
+- 1.5
+- 2
+- 3-4
+- 5 or more hours per day on my primary instrument.
+
+l: theoryyears
+q: I have had formal training in music theory for 
+t: radio
+- 0
+- 0.5
+- 1
+- 2
+- 3
+- 4-6
+- 7 or more years.
+
+
+l: playinstruments
+q: I can play
+t: radio
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6 or more musical instruments.
+
+l: education
+t: radio
+q: What is the highest level of education you have completed?
+- Primary school
+- GCSEs or equivalent
+- A-Levels or equivalent
+- University undergraduate programme
+- University post-graduate programme
+- Doctoral degree
+
+l: OMSI
+q: Which title best describes you?
+t: radio
+- Non-musician
+- Music-loving non-musician
+- Amateur musician
+- Serious amateur musician
+- Semi-professional musician
+- Professional musician
+
+# PsyToolkit Implementation of Josh McDermott's Headphone check (2017)
+
+l: calibration
+a: noise_calib_stim.wav
+q: Adjust the volume to a comfortable level. When you are ready, click continue.
+t: info
+
+random: begin
+
+l: item1
+a: antiphase_HC_IOS.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+l: item2
+a: antiphase_HC_ISO.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+l: item3
+a: antiphase_HC_OIS.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+l: item4
+a: antiphase_HC_OSI.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+l: item5
+a: antiphase_HC_SIO.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+l: item6
+a: antiphase_HC_SOI.wav
+t: radio
+q: When you hit <b>Play</b>, you will hear three sounds separated by silences. <br> Which sound is the quietest?
+- 1
+- 2
+- 3
+
+random: end
+
+l: IOS
+t: set
+- if $item1 == 3 then 1
+- if $item1 != 3 then 0
+
+l: ISO
+t: set
+- if $item2 == 2 then 1
+- if $item2 != 2 then 0
+
+l: OIS
+t: set
+- if $item3 == 3 then 1
+- if $item3 != 3 then 0
+
+l: OSI
+t: set
+- if $item4 == 2 then 1
+- if $item4 != 2 then 0
+
+l: SIO
+t: set
+- if $item5 == 1 then 1
+- if $item5 != 1 then 0
+
+l: SOI
+t: set
+- if $item6 == 1 then 1
+- if $item6 != 1 then 0
+
+l: check
+t: set
+- sum $ISO $IOS $OIS $OSI $SIO $SOI
+
+#l: myfeedback
+#t: info
+#q: You scored {$check}/6 correct in headphone check.
+
+# the below is a workaround to prevent &lt; signs from being converted into html entities.
+
+l: jump3
+t: jump
+- if $check == 0 then goto fail
+- if $check == 1 then goto fail
+- if $check == 2 then goto fail
+- if $check == 3 then goto fail
+- if $check == 4 then goto fail
+- if $check == 5 then goto pass
+- if $check == 6 then goto pass
+
+l: fail
+t: info
+q: Sorry, it looks like you weren't using headphones. (You correctly identified {$check} out of 6 sounds in headphone check).
+
+j: end
+
+l: pass
+t: info
+q: Great! You were using headphones! (You correctly identified {$check} out of 6 sounds in headphone check)
+
+## PRACTICE TRIALS (2) ##########################
+
+l: instructions1
+t: info
+q: Your task is to rate the consonance of the sound on scale of 0 to 10, where 0 is <b>dissonant</b> and 10 is <b>consonant</b>. <br><br>Note that this is a purely subjective question: as an adjective consonance usually denotes things like <i> agreement</i> and <i>compatibility</i>. Each sound should be evaluated as a separate entity, regardless of preceding or sequential ones. Let's do two practice trials.
+
+l: ex01
+a: Chord1Ru1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: ex02
+a: Chord4Rd1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+## ACTUAL EXPERIMENT (28 stimuli) ##########################
+
+l: instructions2
+t: info
+q: <b>Good!</b> You are ready to start the actual task now. There will be 30 sounds for you to rate. Try to focus and use the full scale in your ratings. There will be some control items to check the consistency of your ratings.
+
+
+random: begin
+
+l: Chord1R0
+a: Chord1R0.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Rd1
+a: Chord1Rd1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Rd2
+a: Chord1Rd2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Rd3
+a: Chord1Rd3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Ru1
+a: Chord1Ru1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Ru2
+a: Chord1Ru2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1Ru3
+a: Chord1Ru3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2R0
+a: Chord2R0.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Rd1
+a: Chord2Rd1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Rd2
+a: Chord2Rd2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Rd3
+a: Chord2Rd3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Ru1
+a: Chord2Ru1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Ru2
+a: Chord2Ru2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Ru3
+a: Chord2Ru3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3R0
+a: Chord3R0.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Rd1
+a: Chord3Rd1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Rd2
+a: Chord3Rd2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Rd3
+a: Chord3Rd3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Ru1
+a: Chord3Ru1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Ru2
+a: Chord3Ru2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord3Ru3
+a: Chord3Ru3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4R0
+a: Chord4R0.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Rd1
+a: Chord4Rd1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Rd2
+a: Chord4Rd2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Rd3
+a: Chord4Rd3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Ru1
+a: Chord4Ru1.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Ru2
+a: Chord4Ru2.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Ru3
+a: Chord4Ru3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord2Rd3REP
+a: Chord2Rd3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord4Ru3REP
+a: Chord4Ru3.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+l: Chord1R0REP
+a: Chord1R0.mp3
+t: range
+q: How consonant is the sound?
+- {min=0,max=10,start=5,left=Dissonant,right=Consonant}
+
+random: end
+
+#### feedback ###############
+
+l: repeated_items1
+t: set
+- calc ($Chord2Rd3REP - $Chord2Rd3)
+
+l: repeated_items2
+t: set
+- calc ($Chord4Ru3REP - $Chord4Ru3)
+
+l: repeated_items3
+t: set
+- calc ($Chord1R0REP - $Chord1R0)
+
+l: repeated_items1_quality
+t: set
+- if $repeated_items1 == 0 then excellent
+- if $repeated_items1 == 1 then good
+- if $repeated_items1 == 2 then good
+- if $repeated_items1 == 3 then good
+- if $repeated_items1 == 4 then poor
+- if $repeated_items1 == 5 then poor
+- if $repeated_items1 == 6 then poor
+- if $repeated_items1 == 7 then poor
+- if $repeated_items1 == 8 then poor
+- if $repeated_items1 == 9 then poor
+- if $repeated_items1 == 10 then poor
+- if $repeated_items1 == -1 then good
+- if $repeated_items1 == -2 then good
+- if $repeated_items1 == -3 then good
+- if $repeated_items1 == -4 then poor
+- if $repeated_items1 == -5 then poor
+- if $repeated_items1 == -6 then poor
+- if $repeated_items1 == -7 then poor
+- if $repeated_items1 == -8 then poor
+- if $repeated_items1 == -9 then poor
+- if $repeated_items1 == -10 then poor
+
+l: repeated_items2_quality
+t: set
+- if $repeated_items2 == 0 then excellent
+- if $repeated_items2 == 1 then good
+- if $repeated_items2 == 2 then good
+- if $repeated_items2 == 3 then good
+- if $repeated_items2 == 4 then poor
+- if $repeated_items2 == 5 then poor
+- if $repeated_items2 == 6 then terrible
+- if $repeated_items2 == 7 then terrible
+- if $repeated_items2 == 8 then terrible
+- if $repeated_items2 == 9 then terrible
+- if $repeated_items2 == 10 then terrible
+- if $repeated_items2 == -1 then good
+- if $repeated_items2 == -2 then good
+- if $repeated_items2 == -3 then good
+- if $repeated_items2 == -4 then poor
+- if $repeated_items2 == -5 then poor
+- if $repeated_items2 == -6 then terrible
+- if $repeated_items2 == -7 then terrible
+- if $repeated_items2 == -8 then terrible
+- if $repeated_items2 == -9 then terrible
+- if $repeated_items2 == -10 then terrible
+
+l: repeated_items3_quality
+t: set
+- if $repeated_items3 == 0 then excellent
+- if $repeated_items3 == 1 then good
+- if $repeated_items3 == 2 then good
+- if $repeated_items3 == 3 then good
+- if $repeated_items3 == 4 then poor
+- if $repeated_items3 == 5 then poor
+- if $repeated_items3 == 6 then terrible
+- if $repeated_items3 == 7 then terrible
+- if $repeated_items3 == 8 then terrible
+- if $repeated_items3 == 9 then terrible
+- if $repeated_items3 == 10 then terrible
+- if $repeated_items3 == -1 then good
+- if $repeated_items3 == -2 then good
+- if $repeated_items3 == -3 then good
+- if $repeated_items3 == -4 then poor
+- if $repeated_items3 == -5 then poor
+- if $repeated_items3 == -6 then terrible
+- if $repeated_items3 == -7 then terrible
+- if $repeated_items3 == -8 then terrible
+- if $repeated_items3 == -9 then terrible
+- if $repeated_items3 == -10 then terrible
+
+l: feedback
+t: info
+q: <b>All done!</b> <br>Consistency check: <br> Your ratings for the same sounds differed by: <br> {$repeated_items1} ({$repeated_items1_quality}) <br> {$repeated_items2} ({$repeated_items2_quality}) <br> {$repeated_items3} ({$repeated_items3_quality}). <br>If your consistency was poor or terrible several times, you might want to redo the task carefully.
+
