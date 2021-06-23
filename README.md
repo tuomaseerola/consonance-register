@@ -39,7 +39,7 @@ Stimulus details.
 
 ### Summarise consonance ratings
 
-<img src="man/figures/README-summary-1.png" width="75%" />
+<img src="r/consonance-register-F347/man/figures/README-summary-1.png" width="75%" />
 
 ### Linear mixed model
 
@@ -68,7 +68,7 @@ three Factors.*
 
 <div class="figure">
 
-<img src="man/figures/README-regression-1.png" alt="Cubic model fit to (A) mean consonance ratings and (B) means across the chords." width="75%" />
+<img src="r/consonance-register-F347/man/figures/README-regression-1.png" alt="Cubic model fit to (A) mean consonance ratings and (B) means across the chords." width="75%" />
 <p class="caption">
 Cubic model fit to (A) mean consonance ratings and (B) means across the
 chords.
