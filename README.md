@@ -6,18 +6,18 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This repository contains data and analysis concerning study titled
+This repository contains data and analyses concerning study titled
 “Register Impacts Perceptual Consonance through Roughness and Sharpness”
-by XXXX XXXXX XXXXXX XXXXX.
+by Tuomas Eerola and Imre Lahdelma (in review).
 
 ## Background
 
 <div class="figure">
 
-<img src="r/consonance-register-F347/man/figures/README-register-1.png" alt="Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p.8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers." width="75%" />
+<img src="man/figures/README-register-1.png" alt="Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p. 8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers." width="75%" />
 <p class="caption">
 Panel A: 7 stimulus registers overlaid on an idealised distribution of
-orchestral instrument ranges (from Huron, 2001, p.8). Panel B:
+orchestral instrument ranges (from Huron, 2001, p. 8). Panel B:
 Calculated roughness and sharpness values for different chords across
 the stimulus registers.
 </p>
@@ -39,36 +39,55 @@ Stimulus details.
 
 ### Summarise consonance ratings
 
-<img src="r/consonance-register-F347/man/figures/README-summary-1.png" width="75%" />
+<div class="figure">
+
+<img src="man/figures/README-summary-1.png" alt="Consonance ratings across Chord and Register." width="75%" />
+<p class="caption">
+Consonance ratings across Chord and Register.
+</p>
+
+</div>
 
 ### Linear mixed model
 
 <caption>
-(\#tab:LMM\_table)
+(\#tab:LMM)
 </caption>
 
 <div custom-style="Table Caption">
 
-*Linear Mixed Model analysis results for the consonance ratings for
-three Factors.*
+*Linear Mixed Model analysis results for the consonance ratings for two
+Factors.*
 
 </div>
 
-| term                         | *β̂*   | 95% CI           | *t*   | *d**f*   | *p*       |
-|:-----------------------------|:------|:-----------------|:------|:---------|:----------|
-| Chord                        | -0.14 | \[-0.41, 0.14\]  | -0.99 | 1,587.00 | .323      |
-| Register                     | 0.84  | \[0.67, 1.01\]   | 9.82  | 1,587.00 | &lt; .001 |
-| Expertise                    | -1.21 | \[-2.83, 0.41\]  | -1.46 | 1,262.02 | .144      |
-| Chord × Register             | -0.13 | \[-0.19, -0.07\] | -4.24 | 1,587.00 | &lt; .001 |
-| Chord × Expertise            | -0.01 | \[-0.58, 0.55\]  | -0.05 | 1,587.00 | .958      |
-| Register × Expertise         | 0.49  | \[0.14, 0.83\]   | 2.78  | 1,587.00 | .005      |
-| Chord × Register × Expertise | -0.10 | \[-0.23, 0.02\]  | -1.62 | 1,587.00 | .105      |
+| Term             | *β̂*   | 95% CI           | *t*   | *d**f*   | *p*       |
+|:-----------------|:------|:-----------------|:------|:---------|:----------|
+| Intercept        | 2.92  | \[2.22, 3.61\]   | 8.21  | 1,278.58 | &lt; .001 |
+| Chord            | -0.14 | \[-0.38, 0.10\]  | -1.15 | 1,590.00 | .248      |
+| Register         | 0.96  | \[0.81, 1.10\]   | 12.72 | 1,590.00 | &lt; .001 |
+| Chord × Register | -0.16 | \[-0.21, -0.10\] | -5.72 | 1,590.00 | &lt; .001 |
+
+### Post-hoc analyses of Register and Chord
+
+``` r
+source('figure3.R')
+```
+
+<div class="figure">
+
+<img src="man/figures/README-posthocs-1.png" alt="Consonance ratings across Register and Chord with posthoc analyses." width="75%" />
+<p class="caption">
+Consonance ratings across Register and Chord with posthoc analyses.
+</p>
+
+</div>
 
 ### Regression with the means
 
 <div class="figure">
 
-<img src="r/consonance-register-F347/man/figures/README-regression-1.png" alt="Cubic model fit to (A) mean consonance ratings and (B) means across the chords." width="75%" />
+<img src="man/figures/README-regression-1.png" alt="Cubic model fit to (A) mean consonance ratings and (B) means across the chords." width="75%" />
 <p class="caption">
 Cubic model fit to (A) mean consonance ratings and (B) means across the
 chords.
@@ -77,13 +96,6 @@ chords.
 </div>
 
 ### Regression with the acoustic variables
-
-    #> Loading required package: MASS
-    #> 
-    #> Attaching package: 'MASS'
-    #> The following object is masked from 'package:dplyr':
-    #> 
-    #>     select
 
 |  estimate | p.value | statistic |   n |  gp | Method  |
 |----------:|--------:|----------:|----:|----:|:--------|
@@ -114,3 +126,58 @@ partialled out)
 | Intercept | 9.30  | \[7.31, 11.29\]      | 9.64    | &lt; .001 |
 | Roughness | -7.51 | \[ − 9.20,  − 5.83\] | -9.18   | &lt; .001 |
 | Sharpness | -2.20 | \[ − 4.03,  − 0.37\] | -2.48   | .020      |
+
+## Auxiliary analyses
+
+| Familiarity | Roughness | emmean |   SE |     df | lower.CL | upper.CL |
+|:------------|:----------|-------:|-----:|-------:|---------:|---------:|
+| FHigh       | RHigh     |   4.55 | 0.18 | 187.42 |     4.20 |     4.89 |
+| FLow        | RHigh     |   3.67 | 0.18 | 187.42 |     3.32 |     4.02 |
+| FHigh       | RLow      |   6.11 | 0.18 | 187.42 |     5.76 |     6.45 |
+| FLow        | RLow      |   4.93 | 0.18 | 187.42 |     4.59 |     5.28 |
+
+Musical Expertise
+
+| Var1         | Freq |
+|:-------------|-----:|
+| Non-musician |   43 |
+| Musician     |   16 |
+
+|                                                                 | Estimate | Std. Error | t value |
+|:----------------------------------------------------------------|---------:|-----------:|--------:|
+| (Intercept)                                                     |     2.82 |       0.41 |    6.80 |
+| as.numeric(Chord)                                               |    -0.12 |       0.14 |   -0.84 |
+| as.numeric(Register)                                            |     0.90 |       0.09 |   10.26 |
+| MusicalExpertiseMusician                                        |     0.35 |       0.80 |    0.44 |
+| as.numeric(Chord):as.numeric(Register)                          |    -0.13 |       0.03 |   -4.09 |
+| as.numeric(Chord):MusicalExpertiseMusician                      |    -0.08 |       0.27 |   -0.29 |
+| as.numeric(Register):MusicalExpertiseMusician                   |     0.21 |       0.17 |    1.25 |
+| as.numeric(Chord):as.numeric(Register):MusicalExpertiseMusician |    -0.10 |       0.06 |   -1.56 |
+
+| MusicalExpertise | Register | emmean |   SE |     df | lower.CL | upper.CL |
+|:-----------------|:---------|-------:|-----:|-------:|---------:|---------:|
+| Non-musician     | -3       |   2.47 | 0.23 | 254.66 |     2.02 |     2.91 |
+| Musician         | -3       |   2.41 | 0.37 | 254.66 |     1.68 |     3.14 |
+| Non-musician     | -2       |   3.40 | 0.23 | 254.66 |     2.96 |     3.85 |
+| Musician         | -2       |   3.30 | 0.37 | 254.66 |     2.57 |     4.03 |
+| Non-musician     | -1       |   4.46 | 0.23 | 254.66 |     4.01 |     4.90 |
+| Musician         | -1       |   4.72 | 0.37 | 254.66 |     3.99 |     5.45 |
+| Non-musician     | 0        |   5.65 | 0.23 | 254.66 |     5.20 |     6.09 |
+| Musician         | 0        |   6.09 | 0.37 | 254.66 |     5.36 |     6.82 |
+| Non-musician     | 1        |   6.13 | 0.23 | 254.66 |     5.69 |     6.58 |
+| Musician         | 1        |   6.22 | 0.37 | 254.66 |     5.49 |     6.95 |
+| Non-musician     | 2        |   6.08 | 0.23 | 254.66 |     5.64 |     6.53 |
+| Musician         | 2        |   5.91 | 0.37 | 254.66 |     5.18 |     6.64 |
+| Non-musician     | 3        |   5.45 | 0.23 | 254.66 |     5.01 |     5.90 |
+| Musician         | 3        |   5.22 | 0.37 | 254.66 |     4.49 |     5.95 |
+
+| MusicalExpertise | Chord | emmean |   SE |     df | lower.CL | upper.CL |
+|:-----------------|:------|-------:|-----:|-------:|---------:|---------:|
+| Non-musician     | 3-11B |   5.85 | 0.19 | 141.09 |     5.47 |     6.23 |
+| Musician         | 3-11B |   6.79 | 0.32 | 141.09 |     6.17 |     7.42 |
+| Non-musician     | 3-7A  |   4.93 | 0.19 | 141.09 |     4.55 |     5.31 |
+| Musician         | 3-7A  |   4.94 | 0.32 | 141.09 |     4.31 |     5.56 |
+| Non-musician     | 4-20  |   4.64 | 0.19 | 141.09 |     4.26 |     5.02 |
+| Musician         | 4-20  |   4.29 | 0.32 | 141.09 |     3.67 |     4.92 |
+| Non-musician     | 4-19A |   3.80 | 0.19 | 141.09 |     3.42 |     4.18 |
+| Musician         | 4-19A |   3.32 | 0.32 | 141.09 |     2.69 |     3.95 |

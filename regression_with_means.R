@@ -1,4 +1,6 @@
 # regression_with_means.R
+invisible(library(MASS))
+library(papaja)
 rm(S,S2)
 S2 <- m2 %>%
   dplyr::group_by(Register) %>%
@@ -8,8 +10,7 @@ S2 <- m2 %>%
 
 S2$RegisterNum <-as.numeric(S2$Register)-4
 
-head(S2)
-dim(S2)
+
 model.lin <-lm(m ~ poly(RegisterNum,1,raw = TRUE),data=S2)
 mo1<-papaja::apa_print(summary(model.lin)) # Radj=0.628, p=0.02061
 mo1

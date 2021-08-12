@@ -127,7 +127,7 @@ df2$Stimuli<-c(rep(1,7),rep(2,7),rep(3,7),rep(4,7))
 df2$StimulusName<-c(rep('3-11B',7),rep('3-7A',7),rep('4-20',7),rep('4-19A',7))
 df2$StimulusName<-factor(df2$StimulusName)
 df2$Register<-factor(df2$Register)
-s<-read.csv('../acoustic_analysis/Sharpness.txt',header = FALSE)
+s<-read.csv('Sharpness.txt',header = FALSE)
 df2$Sharpness <- s$V1
 #write.csv(df2,file = 'roughness_and_sharpness.csv')
 m<-melt(df2,id.vars = c('StimulusName','Register'),measure.vars = c('Roughness','Sharpness'))

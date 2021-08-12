@@ -6,7 +6,7 @@ if(verbose==TRUE){
 library(dplyr)
 library(tidyr)
 #### Read data ----------------------------
-d <- read.csv('../empirical/data/data.csv',sep = ",",header=TRUE)
+d <- read.csv('data/data.csv',sep = ",",header=TRUE)
 dim(d)
 
 #### Headphone check fails?

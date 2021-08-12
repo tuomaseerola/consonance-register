@@ -18,13 +18,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This repository contains data and analysis concerning study titled "Register Impacts Perceptual Consonance through Roughness and Sharpness" by XXXX XXXXX XXXXXX XXXXX.
-
+This repository contains data and analyses concerning study titled "Register Impacts Perceptual Consonance through Roughness and Sharpness" by Tuomas Eerola and Imre Lahdelma (in review).
 
 
 ## Background
 
-```{r register,message=FALSE, warning=FALSE,echo=FALSE,fig.width=9,fig.height=5,fig.cap='Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p.8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers.'}
+```{r register,message=FALSE, warning=FALSE,echo=FALSE,fig.width=9,fig.height=5,fig.cap='Panel A: 7 stimulus registers overlaid on an idealised distribution of orchestral instrument ranges (from Huron, 2001, p. 8). Panel B: Calculated roughness and sharpness values for different chords across the stimulus registers.'}
 source('predictions.R')
 print(G)
 ```
@@ -56,7 +55,7 @@ source('load_and_preprocess_data.R')
 
 ### Summarise consonance ratings
 
-```{r summary,echo=FALSE}
+```{r summary,echo=FALSE,fig.cap='Consonance ratings across Chord and Register.'}
 options(dplyr.summarise.inform = FALSE)
 source('summarise_means.R')
 ```
@@ -71,23 +70,21 @@ library(stringr)
 library(papaja)
 library(psych)
 source('LMMs.R')
-```
-
-```{r LMM_table, message=FALSE, warning=FALSE, echo=FALSE, results='asis'}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(papaja)
 lmm_table <- apa_print(m1num2)
 table2 <- data.frame(lmm_table$table)
 
-table2 <- table2[-1, ]
-table2[ ,1] <- c("Chord", "Register", "Expertise", "Chord $\\times$ Register", "Chord $\\times$ Expertise", "Register $\\times$ Expertise", "Chord $\\times$ Register $\\times$ Expertise")
+#table2 <- table2[-1, ]
+#table2[ ,1] <- c("Chord", "Register", "Expertise", "Chord $\\times$ Register", "Chord $\\times$ Expertise", "Register $\\times$ Expertise", "Chord $\\times$ Register $\\times$ Expertise")
 
-apa_table(table2, caption = 'Linear Mixed Model analysis results for the consonance ratings for three Factors.',
+apa_table(table2, caption = 'Linear Mixed Model analysis results for the consonance ratings for two Factors.',
 row.names = F, escape = F
 )
+```
 
+### Post-hoc analyses of Register and Chord
+
+```{r posthocs,eval=TRUE,fig.height=4,fig.width=8,fig.cap='Consonance ratings across Register and Chord with posthoc analyses.'}
+source('figure3.R')
 ```
 
 ### Regression with the means
@@ -108,3 +105,10 @@ papaja::apa_table(
 )
 
 ```
+
+## Auxiliary analyses
+
+```{r auxiliary,results='asis',warning=FALSE,echo=FALSE,message=FALSE}
+source('LMMs_extra.R')
+```
+
